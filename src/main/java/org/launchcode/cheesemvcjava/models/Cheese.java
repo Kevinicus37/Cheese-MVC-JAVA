@@ -1,11 +1,19 @@
 package org.launchcode.cheesemvcjava.models;
 
+import javax.persistence.*;
 import javax.validation.constraints.*;
+import java.util.List;
 
 /**
  * Created by dogma on 6/15/2018.
  */
+
+@Entity
 public class Cheese {
+
+    @Id
+    @GeneratedValue
+    private int id;
 
     @NotNull
     @Size(min=3, max=15)
@@ -15,35 +23,30 @@ public class Cheese {
     @Size(min=1, message="Description must not be empty.")
     private String description;
 
+    @ManyToOne
+    private Category category;
+
+    @ManyToMany(mappedBy = "cheeses")
+    private List<Menu> menus;
+
     @Min(1)
     @Max(5)
     private int rating;
 
-    private int cheeseId;
-    private CheeseType type;
+    public Cheese(){
+    }
 
-
-    private static int nextId = 1;
+    public Cheese(String aName){
+        this(aName, "");
+    }
 
     public Cheese(String aName, String aDescription){
-        this();
         name = aName;
         description = aDescription;
     }
 
-
-
-    public Cheese(){
-        cheeseId = nextId;
-        nextId++;
-    }
-
-    public int getCheeseId() { return cheeseId; }
-
-    public void setCheeseId(int cheeseId) { this.cheeseId = cheeseId; }
-
-    public Cheese(String aName){
-        this(aName, "");
+    public int getId() {
+        return id;
     }
 
     public String getName(){
@@ -62,12 +65,12 @@ public class Cheese {
         description = aDescription;
     }
 
-    public CheeseType getType() {
-        return type;
+    public Category getCategory() {
+        return category;
     }
 
-    public void setType(CheeseType type) {
-        this.type = type;
+    public void setCategory(Category category) {
+        this.category = category;
     }
 
     public int getRating() {

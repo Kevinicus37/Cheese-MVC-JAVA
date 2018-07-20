@@ -10,18 +10,22 @@
         <tr>
             <th>Cheese</th>
             <th>Description</th>
-            <th>Type</th>
+            <th>Category</th>
             <th>Rating</th>
             <th>Edit</th>
         </tr>
         <tr th:each="cheeseItem : ${cheeses}">
             <td th:text="${cheeseItem.name}">Cheese</td>
             <td th:text="${cheeseItem.description}">Description</td>
-            <td th:text="${cheeseItem.type.name}"></td>
+            <td>
+                <a th:text="${cheeseItem.category.name}" th:href="@{/cheese/category/{id} (id=${cheeseItem.category.id})}"></a>
+            </td>
             <td th:text="${cheeseItem.rating}"></td>
-            <td><a th:href="@{/cheese/edit/{id}(id=${cheeseItem.cheeseId})}">edit</a></td>
+            <td><a th:href="@{/cheese/edit/{id}(id=${cheeseItem.id})}">edit</a></td>
 
         </tr>
     </table>
+    <a th:href="@{/cheese/add}">Add</a> |
+    <a th:href="@{/cheese/remove}">Remove</a>
 </body>
 </html>
